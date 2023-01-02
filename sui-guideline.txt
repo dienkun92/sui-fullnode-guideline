@@ -1,0 +1,62 @@
+Sui Devnet full node guideline
+
+Suggested hardware requirements for running a Sui Full node:
+
+CPUs: 10 core
+RAM: 32 GB
+Storage: 1 TB
+Ubuntu 20.04
+Full document: https://docs.sui.io/build/fullnode#hardware-requirements
+
+---------------------run command---------------------
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+    tzdata \
+    ca-certificates \
+    build-essential \
+    pkg-config \
+    cmake
+
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+source $HOME/.cargo/env
+
+sudo apt install curl
+
+sudo apt-get install git-all
+
+sudo apt-get install libssl-dev
+
+sudo apt-get install libclang-dev
+
+Go https://github.com/MystenLabs/sui AND FORK
+
+git clone https://github.com/<YOUR-GITHUB-USERNAME>/sui.git
+
+cd sui
+
+git remote add upstream https://github.com/MystenLabs/sui
+
+git fetch upstream
+
+git checkout --track upstream/devnet
+
+cp crates/sui-config/data/fullnode-template.yaml fullnode.yaml
+
+curl -fLJO https://github.com/MystenLabs/sui-genesis/raw/main/devnet/genesis.blob
+
+sudo apt install tmux
+
+tmux
+
+cargo run --release --bin sui-node -- --config-path fullnode.yaml
+
+----------------------------------------------------------------------------------------
+DONE! Check your node here: https://www.scale3labs.com/check/sui
+
+To close tmux. Press Ctrl + B + D
+To check tmux window list. Run command "tmux ls"
+To attach tmux windows. Run "tmux attach -t <WINDOW-ID>"
+Example: tmux attach -t 0
+To kill tmux windows. Run "tmux kill-session -t <WINDOW-ID>"
